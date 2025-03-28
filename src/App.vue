@@ -11,6 +11,7 @@ interface Product {
   price: number;
   stock: number;
   category: string;
+  visible: boolean; // Added visible property
 }
 
 const products = ref<Product[]>([
@@ -20,6 +21,7 @@ const products = ref<Product[]>([
     price: 1299.99,
     stock: 5,
     category: "Electronics",
+    visible: true,
   },
   {
     id: 2,
@@ -27,6 +29,7 @@ const products = ref<Product[]>([
     price: 29.99,
     stock: 15,
     category: "Electronics",
+    visible: true,
   },
   {
     id: 3,
@@ -34,6 +37,7 @@ const products = ref<Product[]>([
     price: 499.99,
     stock: 0,
     category: "Electronics",
+    visible: true,
   },
   {
     id: 4,
@@ -41,6 +45,7 @@ const products = ref<Product[]>([
     price: 89.99,
     stock: 8,
     category: "Shoes",
+    visible: true,
   },
   {
     id: 5,
@@ -48,6 +53,7 @@ const products = ref<Product[]>([
     price: 199.99,
     stock: 12,
     category: "Home & Kitchen",
+    visible: true,
   },
   {
     id: 6,
@@ -55,6 +61,7 @@ const products = ref<Product[]>([
     price: 999.99,
     stock: 10,
     category: "Electronics",
+    visible: true,
   },
   {
     id: 7,
@@ -62,6 +69,7 @@ const products = ref<Product[]>([
     price: 79.99,
     stock: 25,
     category: "Home & Kitchen",
+    visible: true,
   },
 ]);
 
@@ -98,7 +106,11 @@ const filteredProducts = computed(() => {
       categories.length === 0 || categories.includes(product.category);
 
     return (
-      matchesPrice && matchesStock && matchesStockStatus && matchesCategory
+      product.visible &&
+      matchesPrice &&
+      matchesStock &&
+      matchesStockStatus &&
+      matchesCategory
     );
   });
 });
@@ -107,6 +119,8 @@ const updateProduct = (updatedProduct: Product) => {
   const index = products.value.findIndex((p) => p.id === updatedProduct.id);
   if (index !== -1) {
     products.value[index] = updatedProduct;
+  } else {
+    console.warn("Product not found:", updatedProduct);
   }
 };
 
@@ -115,7 +129,11 @@ const updateFilters = (newFilters: any) => {
 };
 
 const handleImport = (importedProducts: Product[]) => {
-  products.value = [...products.value, ...importedProducts];
+  const formattedProducts = importedProducts.map((product) => ({
+    ...product,
+    visible: product.visible ?? true, // Ensure imported products have 'visible'
+  }));
+  products.value = [...products.value, ...formattedProducts];
 };
 </script>
 

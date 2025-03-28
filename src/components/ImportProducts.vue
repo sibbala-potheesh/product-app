@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import Papa from 'papaparse'
-import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { ref } from "vue";
+import Papa from "papaparse";
+import { ArrowUpTrayIcon } from "@heroicons/vue/24/outline";
 
 interface Product {
-  id: number
-  name: string
-  price: number
-  stock: number
-  category: string
-  visible: boolean
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
+  category: string;
+  visible: boolean;
 }
 
 const emit = defineEmits<{
-  (e: 'import', products: Product[]): void
-}>()
+  (e: "import", products: Product[]): void;
+}>();
 
-const isImporting = ref(false)
-const error = ref('')
+const isImporting = ref(false);
+const error = ref("");
 
 const handleFileUpload = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  const file = input?.files?.[0]
-  
-  if (!file) return
-  
-  if (!file.name.endsWith('.csv')) {
-    error.value = 'Please upload a CSV file'
-    return
+  const input = event.target as HTMLInputElement;
+  const file = input?.files?.[0];
+
+  if (!file) return;
+
+  if (!file.name.endsWith(".csv")) {
+    error.value = "Please upload a CSV file";
+    return;
   }
 
-  isImporting.value = true
-  error.value = ''
+  isImporting.value = true;
+  error.value = "";
 
   Papa.parse(file, {
     header: true,
@@ -39,27 +39,27 @@ const handleFileUpload = (event: Event) => {
       try {
         const products = results.data.map((row: any) => ({
           id: parseInt(row.id) || Math.floor(Math.random() * 10000),
-          name: row.name || '',
+          name: row.name || "",
           price: parseFloat(row.price) || 0,
           stock: parseInt(row.stock) || 0,
-          category: row.category || 'Uncategorized',
-          visible: row.visible === 'true' || true
-        }))
-        
-        emit('import', products)
-        isImporting.value = false
-        if (input) input.value = ''
+          category: row.category || "Uncategorized",
+          visible: row.visible === "true" || true,
+        }));
+
+        emit("import", products);
+        isImporting.value = false;
+        if (input) input.value = "";
       } catch (e) {
-        error.value = 'Error processing file. Please check the format.'
-        isImporting.value = false
+        error.value = "Error processing file. Please check the format.";
+        isImporting.value = false;
       }
     },
-    error: (error) => {
-      error.value = 'Error reading file: ' + error.message
-      isImporting.value = false
-    }
-  })
-}
+    error: (error: any) => {
+      error.value = "Error reading file: " + error.message;
+      isImporting.value = false;
+    },
+  });
+};
 </script>
 
 <template>
@@ -70,9 +70,11 @@ const handleFileUpload = (event: Event) => {
         Import Products
       </h2>
     </div>
-    
+
     <div class="space-y-4">
-      <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+      <div
+        class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center"
+      >
         <input
           type="file"
           accept=".csv"
@@ -89,14 +91,16 @@ const handleFileUpload = (event: Event) => {
           <span class="text-sm text-gray-500">or drag and drop</span>
         </label>
       </div>
-      
+
       <Transition name="fade">
         <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
       </Transition>
-      
+
       <Transition name="fade">
         <div v-if="isImporting" class="flex items-center justify-center gap-2">
-          <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"></div>
+          <div
+            class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500"
+          ></div>
           <span class="text-gray-600">Importing products...</span>
         </div>
       </Transition>
