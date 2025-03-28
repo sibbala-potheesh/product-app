@@ -1,5 +1,43 @@
-# Vue 3 + TypeScript + Vite
+# Product Management
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This project was developed using **Vue.js** and **Tailwind CSS**.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Available Scripts
+
+In the project directory, you can run:
+
+### npm install
+
+Installs all the dependencies required for the project.
+
+### npm run dev
+
+Runs the app in development mode.  
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
+
+The page will reload when you make changes.  
+You may also see any lint errors in the console.
+
+### npm run build
+
+Builds the app for production to the `dist` folder.  
+It correctly bundles Vue in production mode and optimizes the build for the best performance.
+
+The build is minified, and the filenames include the hashes.  
+Your app is ready to be deployed!
+
+## Technologies Used
+
+This project is built using the following technologies:
+
+- **Vue.js** - A progressive JavaScript framework for building UI.
+- **Tailwind CSS** - A utility-first CSS framework for styling.
+- **Vite** - A fast build tool and development server.
+- **Node.js** - JavaScript runtime required to run the application.
+- **npm** - Node package manager to handle dependencies.
+
+## Learn More
+
+To learn more about Vue.js, check out the [Vue documentation](https://vuejs.org/).
+
+To explore Tailwind CSS, visit the [Tailwind documentation](https://tailwindcss.com/docs/installation).
